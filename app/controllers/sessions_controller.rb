@@ -1,0 +1,34 @@
+class SessionsController < ApplicationController
+  skip_before_action :login_required, :only => [:new, :create]
+
+  def new
+  end
+
+  def create
+    @user = User.find_by(:email => params[:email])
+    binding.pry
+    if @user && @user.authenticate(params[:password])
+      login(@user)
+      flash[:notice] = "Logged in successfully"
+      binding.pry
+      redirect_to user_path(current_user.id)
+    else
+      flash.now[:notice] = "Can't find that user."
+      render :new
+    end
+  end
+
+  def destroy
+    reset_session
+    redirect_to root_path
+  end
+
+  def index
+
+  end
+
+  private
+  def login(user)
+    session[:user_id] = user.id
+  end 
+end
