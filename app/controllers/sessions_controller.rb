@@ -6,11 +6,9 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_by(:email => params[:email])
-    binding.pry
     if @user && @user.authenticate(params[:password])
       login(@user)
       flash[:notice] = "Logged in successfully"
-      binding.pry
       redirect_to user_path(current_user.id)
     else
       flash.now[:notice] = "Can't find that user."

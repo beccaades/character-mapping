@@ -1,8 +1,8 @@
-<h1>Hi <%= current_user.name %></h1>
+<h1>Hi <%= @user.name %></h1>
 
 <h3>Characters:</h3>
 <ul>
-  <% current_user.characters.each do |character| %>
+  <% @user.characters.each do |character| %>
     <li><%= link_to character.name, character_path(character) %></li>
   <% end %>
 </ul>
